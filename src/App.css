@@ -36,6 +36,12 @@ h2 {
   flex-direction: column;
 }
 
+.item-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .expense-item input[type="number"],
 .expense-item input[type="text"] {
   padding: 8px 10px;
@@ -44,11 +50,7 @@ h2 {
   flex: 1;
   font-size: 1rem;
   transition: border-color 0.2s;
-}
-
-.item-group {
-  display: flex;
-  gap: 10px;
+  min-width: 0;
 }
 
 .created-at {
@@ -90,6 +92,7 @@ h2 {
 .expense-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -99,7 +102,7 @@ h2 {
   cursor: pointer;
   padding: 6px;
   transition: transform 0.2s;
-  font-size: 50px;
+  font-size: 28px;
 }
 
 .icon-button:hover {
@@ -110,4 +113,24 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+@media (max-width: 500px) {
+
+  .icon-button {
+    font-size: 24px;
+  }
+
+  .expense-item input[type="number"],
+  .expense-item input[type="text"] {
+    width: 50%;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+  }
+
+  h2 {
+    font-size: 1rem;
+  }
 }

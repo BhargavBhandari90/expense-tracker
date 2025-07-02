@@ -20,6 +20,7 @@ function App() {
 
   const [expenses, setExpenses] = React.useState([]);
   const [selectedDate, setSelectedDate] = React.useState(todayDate);
+  const [expensesCache, setExpensesCache] = React.useState({});
 
   const handlePrevDay = () => {
     const prev = new Date(selectedDate);
@@ -33,21 +34,36 @@ function App() {
     setSelectedDate(next.toISOString().split("T")[0]);
   };
 
-  const fetchExpenses = async (date) => {
-    const expensesQuery = query(
-      collection(db, "expenses"),
-      where("date", "==", date),
-      orderBy("createdAt", "asc")
-    );
-    const snapshot = await getDocs(expensesQuery);
-    const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    setExpenses(items);
-  };
+  const fetchExpenses = React.useCallback(
+    async (date) => {
+      if (expensesCache[date]) {
+        setExpenses(expensesCache[date]);
+        return;
+      }
+
+      const expensesQuery = query(
+        collection(db, "expenses"),
+        where("date", "==", date),
+        orderBy("createdAt", "asc")
+      );
+
+      const snapshot = await getDocs(expensesQuery);
+      const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+
+      setExpensesCache((prevCache) => ({
+        ...prevCache,
+        [date]: items,
+      }));
+
+      setExpenses(items);
+    },
+    [expensesCache]
+  );
 
   // Load from Firestore
   React.useEffect(() => {
     fetchExpenses(selectedDate);
-  }, [selectedDate]);
+  }, [selectedDate, fetchExpenses]);
 
   const addExpense = async () => {
     const newExpense = {
@@ -57,11 +73,16 @@ function App() {
       date: selectedDate,
     };
 
-    console.log('todayDate', todayDate);
-    console.log('selectedDate', selectedDate);
+    console.log("todayDate", todayDate);
+    console.log("selectedDate", selectedDate);
 
     const docRef = await addDoc(collection(db, "expenses"), newExpense);
     setExpenses([...expenses, { id: docRef.id, ...newExpense }]);
+
+    setExpensesCache((prevCache) => ({
+        ...prevCache,
+        [selectedDate]: expenses,
+      }));
   };
 
   const handleChange = async (index, field, value) => {
@@ -85,12 +106,16 @@ function App() {
   return (
     <div className="app-container">
       <div className="expense-header">
-      <button className="icon-button" onClick={handlePrevDay}><FaCircleChevronLeft /></button>
-      <div className="expense-title">
-        <h1>Daily Expense Tracker</h1>
-        <h2>{new Date(selectedDate).toDateString()}</h2>
-      </div>
-      <button className="icon-button" onClick={handleNextDay}><FaCircleChevronRight /></button>
+        <button className="icon-button" onClick={handlePrevDay}>
+          <FaCircleChevronLeft />
+        </button>
+        <div className="expense-title">
+          <h1>Daily Expense Tracker</h1>
+          <h2>{new Date(selectedDate).toDateString()}</h2>
+        </div>
+        <button className="icon-button" onClick={handleNextDay}>
+          <FaCircleChevronRight />
+        </button>
       </div>
 
       <ExpenseList expenses={expenses} onChange={handleChange} />
