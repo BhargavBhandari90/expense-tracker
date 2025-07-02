@@ -1,38 +1,113 @@
-.App {
+body {
+  color: #333;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h2 {
+  margin: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.expense-list {
+  display: flex;
+  flex-direction: column;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.expense-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-direction: column;
+}
+
+.expense-item input[type="number"],
+.expense-item input[type="text"] {
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  flex: 1;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.item-group {
+  display: flex;
+  gap: 10px;
+}
+
+.created-at {
+  font-size: 11px;
+  color: #666;
+  text-align: end;
+}
+
+.expense-item input[type="number"]:focus,
+.expense-item input[type="text"]:focus {
+  outline: none;
+  border-color: #4f46e5;
+}
+
+.add-button {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #4f46e5;
+  color: #fff;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-button:hover {
+  background-color: #3730a3;
+}
+
+.total-text {
+  margin-top: 24px;
+  font-size: 1.2rem;
+  text-align: center;
+  color: #333;
+}
+
+.expense-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  transition: transform 0.2s;
+  font-size: 50px;
+}
+
+.icon-button:hover {
+  transform: scale(1.2);
+}
+
+.expense-title {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
