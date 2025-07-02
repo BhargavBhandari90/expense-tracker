@@ -11,9 +11,9 @@ import {
   query,
   orderBy,
   where,
+  deleteDoc,
 } from "firebase/firestore";
-import { FaCircleChevronLeft } from "react-icons/fa6";
-import { FaCircleChevronRight } from "react-icons/fa6";
+import { FaCircleChevronLeft, FaCircleChevronRight, FaPlus } from "react-icons/fa6";
 
 function App() {
   const todayDate = new Date().toISOString().split("T")[0];
@@ -34,6 +34,24 @@ function App() {
     setSelectedDate(next.toISOString().split("T")[0]);
   };
 
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoc(doc(db, "expenses", id));
+
+      // Remove from local expenses list.
+      const updatedExpenses = expenses.filter((item) => item.id !== id);
+      setExpenses(updatedExpenses);
+
+      // Update cache too.
+      setExpensesCache((prev) => ({
+        ...prev,
+        [selectedDate]: updatedExpenses,
+      }));
+    } catch (error) {
+      console.error("Error deleting document: ", error);
+    }
+  };
+
   const fetchExpenses = React.useCallback(
     async (date) => {
       if (expensesCache[date]) {
@@ -50,8 +68,8 @@ function App() {
       const snapshot = await getDocs(expensesQuery);
       const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-      setExpensesCache((prevCache) => ({
-        ...prevCache,
+      setExpensesCache((prev) => ({
+        ...prev,
         [date]: items,
       }));
 
@@ -66,6 +84,7 @@ function App() {
   }, [selectedDate, fetchExpenses]);
 
   const addExpense = async () => {
+
     const newExpense = {
       price: "",
       description: "",
@@ -73,22 +92,20 @@ function App() {
       date: selectedDate,
     };
 
-    console.log("todayDate", todayDate);
-    console.log("selectedDate", selectedDate);
-
     const docRef = await addDoc(collection(db, "expenses"), newExpense);
-    setExpenses([...expenses, { id: docRef.id, ...newExpense }]);
 
-    setExpensesCache((prevCache) => ({
-        ...prevCache,
-        [selectedDate]: expenses,
-      }));
+    setExpenses([...expenses, { id: docRef.id, ...newExpense }]);
   };
 
   const handleChange = async (index, field, value) => {
     const updatedExpenses = [...expenses];
     updatedExpenses[index][field] = value;
     setExpenses(updatedExpenses);
+
+    setExpensesCache((prev) => ({
+        ...prev,
+        [selectedDate]: updatedExpenses,
+      }));
 
     const expenseDoc = doc(db, "expenses", updatedExpenses[index].id);
     await updateDoc(expenseDoc, {
@@ -118,12 +135,19 @@ function App() {
         </button>
       </div>
 
-      <ExpenseList expenses={expenses} onChange={handleChange} />
+      { expenses ? (
+        <ExpenseList
+          expenses={expenses}
+          onChange={handleChange}
+          onDelete={handleDelete}
+        /> ) : (
+          <p>No Expense found....</p>
+        )
+      }
 
       <button className="add-button" onClick={addExpense}>
-        Add More
+        <FaPlus />
       </button>
-
       <h2 className="total-text">Total: ₹{getTotal().toFixed(2)}</h2>
     </div>
   );

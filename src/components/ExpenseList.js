@@ -1,7 +1,7 @@
 import React from "react";
 import ExpenseItem from "./ExpenseItem";
 
-function ExpenseList({ expenses, onChange }) {
+function ExpenseList({ expenses, onChange, onDelete }) {
 
   return (
     <div className="expense-list">
@@ -11,6 +11,7 @@ function ExpenseList({ expenses, onChange }) {
           item={item}
           index={index}
           onChange={onChange}
+          onDelete={onDelete}
         />
       ))}
     </div>

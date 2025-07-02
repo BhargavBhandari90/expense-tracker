@@ -105,6 +105,10 @@ h2 {
   font-size: 28px;
 }
 
+button.icon-button.delete {
+  color: #b91c1c;
+}
+
 .icon-button:hover {
   transform: scale(1.2);
 }

@@ -1,6 +1,7 @@
 import React from "react";
+import { MdDelete } from "react-icons/md";
 
-function ExpenseItem({ item, index, onChange }) {
+function ExpenseItem({ item, index, onChange, onDelete }) {
   return (
     <div className="expense-item">
       <div className="item-group">
@@ -16,6 +17,7 @@ function ExpenseItem({ item, index, onChange }) {
           value={item.description}
           onChange={(e) => onChange(index, "description", e.target.value)}
         />
+        <button className="icon-button delete" onClick={() => onDelete(item.id)}><MdDelete /></button>
       </div>
       {item.createdAt && (
         <div className="created-at">
