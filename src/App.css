@@ -89,6 +89,18 @@ h2 {
   color: #333;
 }
 
+.total-highlight {
+  padding: 15px;
+  background-color: #e8f5e9;
+  border: 2px solid #4caf50;
+  border-radius: 10px;
+  color: #2e7d32;
+  font-weight: bold;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 400px;
+}
+
 .expense-header {
   display: flex;
   justify-content: space-between;

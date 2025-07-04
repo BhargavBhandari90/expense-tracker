@@ -6,7 +6,7 @@ const MonthlyExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(
     new Date().toISOString().slice(0, 7)
-  ); // e.g., "2025-07"
+  );
 
   const fetchMonthlyExpenses = React.useCallback(
 
@@ -39,11 +39,19 @@ const MonthlyExpensesPage = () => {
   return (
     <div>
       <h1>Monthly Expenses</h1>
-      <input
-        type="month"
-        value={selectedMonth}
-        onChange={(e) => setSelectedMonth(e.target.value)}
-      />
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <input
+          type="month"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+          style={{
+            padding: "10px",
+            border: "2px solid #ccc",
+            borderRadius: "5px",
+            margin: "20px 0",
+          }}
+        />
+      </div>
       <div className="expense-list">
         {expenses.map((item) => (
           <div key={item.id} className="expense-item">
@@ -57,7 +65,7 @@ const MonthlyExpensesPage = () => {
           </div>
         ))}
       </div>
-      <h2 className="total-text">Total: ₹{total.toFixed(2)}</h2>
+      <h2 className="total-text total-highlight">Total: ₹{total.toFixed(2)}</h2>
     </div>
   );
 };
