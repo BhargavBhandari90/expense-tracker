@@ -121,13 +121,12 @@ function DailyExpensesPage() {
   };
 
   return (
-    <div className="app-container">
+    <>
       <div className="expense-header">
         <button className="icon-button" onClick={handlePrevDay}>
           <FaCircleChevronLeft />
         </button>
         <div className="expense-title">
-          <h1>Daily Expense Tracker</h1>
           <h2>{new Date(selectedDate).toDateString()}</h2>
         </div>
         <button className="icon-button" onClick={handleNextDay}>
@@ -135,7 +134,7 @@ function DailyExpensesPage() {
         </button>
       </div>
 
-      { expenses ? (
+      { expenses.length > 0 ? (
         <ExpenseList
           expenses={expenses}
           onChange={handleChange}
@@ -148,8 +147,8 @@ function DailyExpensesPage() {
       <button className="add-button" onClick={addExpense}>
         <FaPlus />
       </button>
-      <h2 className="total-text">Total: ₹{getTotal().toFixed(2)}</h2>
-    </div>
+      <h2 className="total-text total-highlight">Total: ₹{getTotal().toFixed(2)}</h2>
+    </>
   );
 }
 

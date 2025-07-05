@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import "./MonthlyExpensesPage.css";
 
 const MonthlyExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -13,7 +14,7 @@ const MonthlyExpensesPage = () => {
     async () => {
     const expensesQuery = query(
       collection(db, "expenses"),
-      orderBy("createdAt", "asc")
+      orderBy("date", "asc")
     );
     const snapshot = await getDocs(expensesQuery);
     const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -39,10 +40,12 @@ const MonthlyExpensesPage = () => {
   return (
     <div>
       <h1>Monthly Expenses</h1>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className="month-container">
         <input
           type="month"
           value={selectedMonth}
+          id="month"
+          name="month"
           onChange={(e) => setSelectedMonth(e.target.value)}
           style={{
             padding: "10px",
@@ -52,19 +55,28 @@ const MonthlyExpensesPage = () => {
           }}
         />
       </div>
-      <div className="expense-list">
-        {expenses.map((item) => (
-          <div key={item.id} className="expense-item">
-            <div className="item-group">
-              <input type="number" value={item.price} readOnly />
-              <input type="text" value={item.description} readOnly />
-            </div>
-            <div className="created-at">
-              Added on: {new Date(item.createdAt).toLocaleString()}
-            </div>
-          </div>
-        ))}
-      </div>
+      {expenses.length > 0 ? (
+        <table className="monthly-expenses-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expenses.map((item) => (
+              <tr key={item.id}>
+                <td>{new Date(item.date).toDateString()}</td>
+                <td>{item.description}</td>
+                <td>₹{parseFloat(item.price || 0).toFixed(2)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No expenses found for this month.</p>
+      )}
       <h2 className="total-text total-highlight">Total: ₹{total.toFixed(2)}</h2>
     </div>
   );

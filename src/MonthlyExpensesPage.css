@@ -1,0 +1,38 @@
+.monthly-expenses-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.monthly-expenses-table th,
+.monthly-expenses-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.monthly-expenses-table th {
+  background-color: #4f46e5;
+  color: white;
+  font-weight: bold;
+}
+
+.monthly-expenses-table tbody tr:nth-of-type(even) {
+  background-color: #f8f8f8;
+}
+
+.monthly-expenses-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.monthly-expenses-table td:last-child {
+  text-align: right;
+}
+
+.month-container {
+    display: flex;
+    justify-content: center;
+}
