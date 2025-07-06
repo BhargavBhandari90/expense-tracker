@@ -1,13 +1,16 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      navigate("/");
     } catch (error) {
       console.error("Failed to log out:", error);
       alert("Failed to log out. Please try again.");

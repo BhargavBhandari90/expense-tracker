@@ -18,6 +18,7 @@ import {
   FaCircleChevronRight,
   FaPlus,
 } from "react-icons/fa6";
+import { auth } from "./firebase";
 
 function DailyExpensesPage() {
   const todayDate = new Date().toISOString().split("T")[0];
@@ -42,11 +43,9 @@ function DailyExpensesPage() {
     try {
       await deleteDoc(doc(db, "expenses", id));
 
-      // Remove from local expenses list.
       const updatedExpenses = expenses.filter((item) => item.id !== id);
       setExpenses(updatedExpenses);
 
-      // Update cache too.
       setExpensesCache((prev) => ({
         ...prev,
         [selectedDate]: updatedExpenses,
@@ -65,6 +64,7 @@ function DailyExpensesPage() {
 
       const expensesQuery = query(
         collection(db, "expenses"),
+        where("userId", "==", auth.currentUser.uid),
         where("date", "==", date),
         orderBy("createdAt", "asc")
       );
@@ -93,6 +93,7 @@ function DailyExpensesPage() {
       description: "",
       createdAt: new Date().toISOString(),
       date: selectedDate,
+      userId: auth.currentUser.uid,
     };
 
     const docRef = await addDoc(collection(db, "expenses"), newExpense);

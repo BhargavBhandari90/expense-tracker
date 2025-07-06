@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db } from "./firebase";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+import { db, auth } from "./firebase";
+import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
 import "./styles/MonthlyExpensesPage.css";
 
 const MonthlyExpensesPage = () => {
@@ -14,6 +14,7 @@ const MonthlyExpensesPage = () => {
     async () => {
     const expensesQuery = query(
       collection(db, "expenses"),
+      where("userId", "==", auth.currentUser.uid),
       orderBy("date", "asc")
     );
     const snapshot = await getDocs(expensesQuery);
