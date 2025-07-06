@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ExpenseList from "./components/ExpenseList";
 import "./styles/App.css";
 import { db } from "./firebase";
@@ -23,9 +23,9 @@ import { auth } from "./firebase";
 function DailyExpensesPage() {
   const todayDate = new Date().toISOString().split("T")[0];
 
-  const [expenses, setExpenses] = React.useState([]);
-  const [selectedDate, setSelectedDate] = React.useState(todayDate);
-  const [expensesCache, setExpensesCache] = React.useState({});
+  const [expenses, setExpenses] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(todayDate);
+  const [expensesCache, setExpensesCache] = useState({});
 
   const handlePrevDay = () => {
     const prev = new Date(selectedDate);

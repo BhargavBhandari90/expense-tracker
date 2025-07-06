@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { auth } from "./firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signOut, createUserWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { ReactComponent as Logo } from "./logo.svg";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -12,7 +15,19 @@ function SignupPage() {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      await signOut(auth);
+      toast.success("Succefully Signed Up! Please Login.", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/login");
+
     } catch (error) {
       alert(error.message);
     }
@@ -20,6 +35,7 @@ function SignupPage() {
 
   return (
     <div className="app-container">
+      <Logo className="app-logo" />
       <h1>Sign Up</h1>
       <form>
         <input
@@ -43,12 +59,9 @@ function SignupPage() {
       </form>
       <p>
         Already have an account?{" "}
-        <button
-          onClick={() => navigate("/login")}
-          className="underline text-blue-600"
-        >
+        <Link to="/login" className="nav-link">
           Login
-        </button>
+        </Link>
       </p>
     </div>
   );

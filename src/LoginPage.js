@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "./firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { ReactComponent as Logo } from "./logo.svg";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -12,6 +14,16 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toast.success("You are Logged-in!", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       navigate("/");
     } catch (error) {
       alert(error.message);
@@ -20,6 +32,7 @@ const LoginPage = () => {
 
   return (
     <div className="app-container">
+      <Logo className="app-logo" />
       <h1>Login</h1>
       <form>
         <input
@@ -44,12 +57,9 @@ const LoginPage = () => {
       </form>
       <p>
         Don't have an account?{" "}
-        <button
-          onClick={() => navigate("/signup")}
-          className="underline text-blue-600"
-        >
+        <Link to="/signup" className="nav-link">
           Sign Up
-        </button>
+        </Link>
       </p>
     </div>
   );

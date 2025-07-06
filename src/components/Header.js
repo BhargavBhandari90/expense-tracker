@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { useUser } from "../AuthContext";
+import { auth, db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { FaUserCircle } from "react-icons/fa";
+import { ReactComponent as Logo } from "../logo.svg";
 
 export default function Header() {
   const navigate = useNavigate();
+  const [ name, setName ] = useState("");
+  const { userName } = useUser();
+
+  console.log('userName', userName);
+
+    useEffect(() => {
+    if (auth.currentUser) {
+      const fetchUserProfile = async () => {
+        const docRef = doc(db, "users", auth.currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setName( data.name );
+        }
+      };
+      fetchUserProfile();
+    }
+  }, [name]);
 
   const handleLogout = async () => {
     try {
@@ -20,6 +41,7 @@ export default function Header() {
   return (
     <header className="app-header">
       <Link to="/" className="logo">
+        <Logo className="app-logo" />
         Expense Tracker
       </Link>
       <div className="app-header-right">
@@ -32,11 +54,17 @@ export default function Header() {
           </NavLink>
         </nav>
         <div className="user-profile">
+          <div className="user-data">
           <FaUserCircle size={28} />
+          <div className="user-name">{name}</div>
+          </div>
           <div className="user-profile-dropdown">
-            <button onClick={handleLogout} className="logout-button">
+            <NavLink to="/profile" onClick={handleLogout} className="profile-link logout-button">
               Logout
-            </button>
+            </NavLink>
+            <NavLink to="/profile" className="profile-link">
+                My Profile
+            </NavLink>
           </div>
         </div>
       </div>

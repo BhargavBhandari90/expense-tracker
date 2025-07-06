@@ -13,6 +13,13 @@ body {
   display: flex;
   flex-direction: column;
   text-align: center;
+  gap: 20px;
+}
+
+.app-logo {
+  width: 60px;
+  height: 60px;
+  align-self: center;
 }
 
 .app-container form {

@@ -5,8 +5,11 @@ import MonthlyExpensesPage from "./MonthlyExpensesPage";
 import "./styles/App.css";
 import "./styles/Header.css";
 import Header from "./components/Header";
+import UserProfilePage from "./UserProfilePage";
 
-function MainPage() {
+function MainPage(props) {
+  console.log('-username-',props);
+
   return (
     <>
       <Header />
@@ -14,6 +17,7 @@ function MainPage() {
         <Routes>
           <Route path="/" element={<DailyExpensesPage />} />
           <Route path="/monthly" element={<MonthlyExpensesPage />} />
+          <Route path="/profile" element={<UserProfilePage />} />
         </Routes>
       </main>
     </>
