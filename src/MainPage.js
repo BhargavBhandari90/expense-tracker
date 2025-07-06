@@ -7,9 +7,7 @@ import "./styles/Header.css";
 import Header from "./components/Header";
 import UserProfilePage from "./UserProfilePage";
 
-function MainPage(props) {
-  console.log('-username-',props);
-
+function MainPage() {
   return (
     <>
       <Header />

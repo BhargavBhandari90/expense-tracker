@@ -3,12 +3,14 @@ import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "./firebase";
 import { useNavigate } from "react-router-dom";
 import { toast, Bounce } from "react-toastify";
-
+import { useUser } from "./AuthContext";
 
 const UserProfilePage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
+  const { setUserName } = useUser();
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -34,7 +36,7 @@ const UserProfilePage = () => {
         name: name,
         email: email,
       });
-
+      setUserName(name);
       toast.success("Profile Saved!", {
         position: "bottom-center",
         autoClose: 5000,

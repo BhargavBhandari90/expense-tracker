@@ -1,9 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 const AuthContext = createContext();
-const UserContext = createContext('User');
+const UserContext = createContext();
 
 export function useAuth() {
   return useContext(AuthContext);
@@ -15,10 +16,22 @@ export function useUser() {
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
-  const [userName ] = useState('BB User');
+  const [userName, setUserName] = useState("");
   const [loading, setLoading] = useState(true);
 
-  console.log("currentUser", currentUser);
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (currentUser) {
+        const docRef = doc(db, "users", currentUser.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setUserName(docSnap.data().name || "");
+        }
+      }
+    };
+
+    fetchUserProfile();
+  }, [currentUser]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -28,11 +41,11 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  console.log('**userName**',userName);
-
   return (
-    <AuthContext value={{ currentUser, userName }}>
-      {!loading && children}
+    <AuthContext value={{ currentUser }}>
+      <UserContext value={{ userName, setUserName }}>
+        {!loading && children}
+      </UserContext>
     </AuthContext>
   );
 }

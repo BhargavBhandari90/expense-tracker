@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider, useAuth, useUser } from "./AuthContext";
+import { AuthProvider, useAuth } from "./AuthContext";
 import { ToastContainer } from "react-toastify";
 import LoginPage from "./LoginPage";
 import SignupPage from "./SignupPage";
@@ -8,18 +8,17 @@ import MainPage from "./MainPage";
 
 function App() {
   return (
-      <AuthProvider>
-          <BrowserRouter>
-            <AppRoutes />
-            <ToastContainer />
-          </BrowserRouter>
-      </AuthProvider>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppRoutes />
+        <ToastContainer />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
 function AppRoutes() {
   const { currentUser } = useAuth();
-  const { userName } = useUser();
 
   return (
     <Routes>
@@ -31,7 +30,7 @@ function AppRoutes() {
         </>
       ) : (
         <>
-          <Route path="*" element={<MainPage username={ userName } />} />
+          <Route path="*" element={<MainPage />} />
         </>
       )}
     </Routes>
