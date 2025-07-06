@@ -124,25 +124,84 @@
   cursor: pointer;
 }
 
+.app-header .burger,
+.mobile-app-nav {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .app-header {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    padding: 1rem 1rem;
   }
 
-  .app-nav {
-    flex-direction: column;
-    width: 100%;
-    margin-top: 10px;
+  .logo {
+    font-size: 1rem;
+  }
+
+  .logo .app-logo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .app-nav,
+  .user-profile:hover .user-profile-dropdown {
+    display: none;
   }
 
   .user-profile {
-    margin-top: 10px;
     width: 100%;
     justify-content: space-between;
   }
 
   .user-data {
     flex: 1;
+  }
+
+  .app-header .burger {
+    display: block;
+    cursor: pointer;
+  }
+
+  .mobile-app-nav {
+    position: fixed;
+    top: 0;
+    left: -70%;
+    width: 50%;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    z-index: 100;
+  }
+
+  .mobile-app-nav.active {
+    left: 0;
+  }
+
+  .mobile-app-nav .nav-link {
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  .mobile-app-nav .close-icon {
+    align-self: flex-end;
+    cursor: pointer;
+  }
+
+  .logout-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: black;
+    font-weight: 500;
+    text-align: left;
+    padding: 0;
   }
 }

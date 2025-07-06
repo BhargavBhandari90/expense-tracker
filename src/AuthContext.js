@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { auth, db } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import Loader from "./components/Loader";
 
 const AuthContext = createContext();
 const UserContext = createContext();
@@ -44,7 +45,7 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext value={{ currentUser }}>
       <UserContext value={{ userName, setUserName }}>
-        {!loading && children}
+        {loading ? <Loader /> : children}
       </UserContext>
     </AuthContext>
   );
