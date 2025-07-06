@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
-import "./MonthlyExpensesPage.css";
+import "./styles/MonthlyExpensesPage.css";
 
 const MonthlyExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -38,7 +38,7 @@ const MonthlyExpensesPage = () => {
   );
 
   return (
-    <div>
+    <>
       <h1>Monthly Expenses</h1>
       <div className="month-container">
         <input
@@ -78,7 +78,7 @@ const MonthlyExpensesPage = () => {
         <p>No expenses found for this month.</p>
       )}
       <h2 className="total-text total-highlight">Total: ₹{total.toFixed(2)}</h2>
-    </div>
+    </>
   );
 };
 

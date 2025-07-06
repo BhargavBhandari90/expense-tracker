@@ -1,6 +1,6 @@
 import React from "react";
 import ExpenseList from "./components/ExpenseList";
-import "./App.css";
+import "./styles/App.css";
 import { db } from "./firebase";
 import {
   collection,
@@ -13,7 +13,11 @@ import {
   where,
   deleteDoc,
 } from "firebase/firestore";
-import { FaCircleChevronLeft, FaCircleChevronRight, FaPlus } from "react-icons/fa6";
+import {
+  FaCircleChevronLeft,
+  FaCircleChevronRight,
+  FaPlus,
+} from "react-icons/fa6";
 
 function DailyExpensesPage() {
   const todayDate = new Date().toISOString().split("T")[0];
@@ -84,7 +88,6 @@ function DailyExpensesPage() {
   }, [selectedDate, fetchExpenses]);
 
   const addExpense = async () => {
-
     const newExpense = {
       price: "",
       description: "",
@@ -103,9 +106,9 @@ function DailyExpensesPage() {
     setExpenses(updatedExpenses);
 
     setExpensesCache((prev) => ({
-        ...prev,
-        [selectedDate]: updatedExpenses,
-      }));
+      ...prev,
+      [selectedDate]: updatedExpenses,
+    }));
 
     const expenseDoc = doc(db, "expenses", updatedExpenses[index].id);
     await updateDoc(expenseDoc, {
@@ -134,20 +137,22 @@ function DailyExpensesPage() {
         </button>
       </div>
 
-      { expenses.length > 0 ? (
+      {expenses.length > 0 ? (
         <ExpenseList
           expenses={expenses}
           onChange={handleChange}
           onDelete={handleDelete}
-        /> ) : (
-          <p>No Expense found....</p>
-        )
-      }
+        />
+      ) : (
+        <p>No Expense found....</p>
+      )}
 
       <button className="add-button" onClick={addExpense}>
         <FaPlus />
       </button>
-      <h2 className="total-text total-highlight">Total: ₹{getTotal().toFixed(2)}</h2>
+      <h2 className="total-text total-highlight">
+        Total: ₹{getTotal().toFixed(2)}
+      </h2>
     </>
   );
 }

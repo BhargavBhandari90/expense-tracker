@@ -1,45 +1,37 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link,
-  NavLink,
-} from "react-router-dom";
-import DailyExpensesPage from "./DailyExpensesPage";
-import MonthlyExpensesPage from "./MonthlyExpensesPage";
-import { FaUserCircle } from "react-icons/fa";
-import "./App.css";
-import "./Header.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider, useAuth } from "./AuthContext";
+import LoginPage from "./LoginPage";
+import SignupPage from "./SignupPage";
+import MainPage from "./MainPage";
 
 function App() {
   return (
-    <Router>
-      <header className="app-header">
-        <Link to="/" className="logo">
-          Expense Tracker
-        </Link>
-        <div className="app-header-right">
-          <nav className="app-nav">
-            <NavLink to="/" className="nav-link">
-              Daily
-            </NavLink>
-            <NavLink to="/monthly" className="nav-link">
-              Monthly
-            </NavLink>
-          </nav>
-          <div className="user-profile">
-            <FaUserCircle size={28} />
-          </div>
-        </div>
-      </header>
-      <main className="app-container">
-        <Routes>
-          <Route path="/" element={<DailyExpensesPage />} />
-          <Route path="/monthly" element={<MonthlyExpensesPage />} />
-        </Routes>
-      </main>
-    </Router>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
+
+function AppRoutes() {
+  const { currentUser } = useAuth();
+
+  return (
+    <Routes>
+      {!currentUser ? (
+        <>
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<SignupPage />} />
+        </>
+      ) : (
+        <>
+          <Route path="*" element={<MainPage />} />
+        </>
+      )}
+    </Routes>
   );
 }
 

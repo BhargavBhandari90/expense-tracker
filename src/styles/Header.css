@@ -56,7 +56,44 @@
 }
 
 .app-header-right {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.user-profile {
+  position: relative;
+}
+
+.user-profile-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 8px;
+  z-index: 20;
+  width: 120px;
+}
+
+.user-profile:hover .user-profile-dropdown {
+  display: block;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.logout-button:hover {
+  background-color: #f1f1f1;
 }

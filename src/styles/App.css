@@ -15,6 +15,12 @@ body {
   text-align: center;
 }
 
+.app-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 h1 {
   margin: 0;
   font-size: 1.8rem;
@@ -150,4 +156,18 @@ button.icon-button.delete {
   h2 {
     font-size: 1rem;
   }
+}
+
+.expense-input {
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.expense-input:focus {
+  border-color: #4f46e5;
+  outline: none;
 }
