@@ -1,6 +1,39 @@
-# Getting Started with Create React App
+# 💰 Expense Tracker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern and simple expense tracking web app built with **React**, **Firebase**, and responsive design.  
+
+---
+
+## 🚀 Features
+
+✅ Sign up and login using email & password (Firebase Authentication)  
+✅ Add daily expenses with description and price  
+✅ View and filter monthly expenses  
+✅ See total expenses per day or per month  
+✅ Update user profile with name and profile picture  
+✅ Responsive header with hamburger menu on mobile  
+✅ Progressive Web App (PWA) ready — installable on supported devices  
+✅ Toast notifications for success/error feedback  
+
+---
+
+## 🖥️ Tech Stack
+
+- **Frontend**: React, React Router, React Icons, React Toastify
+- **Backend & Auth**: Firebase Authentication, Firestore Database
+- **Styling**: CSS Modules / custom CSS
+- **Hosting & PWA**: Firebase Hosting (recommended)
+
+---
+
+## ⚙️ Setup & Installation
+
+1. **Clone this repo**
+
+```bash
+git clone https://github.com/your-username/expense-tracker.git
+cd expense-tracker
+```
 
 ## Available Scripts
 
