@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import ExpenseList from "./components/ExpenseList";
-import "./styles/App.css";
-import { db } from "./firebase";
+import ExpenseList from "../components/ExpenseList";
+import { db, auth } from "../firebase/firebase";
 import {
   collection,
   addDoc,
@@ -18,7 +17,6 @@ import {
   FaCircleChevronRight,
   FaPlus,
 } from "react-icons/fa6";
-import { auth } from "./firebase";
 
 function DailyExpensesPage() {
   const todayDate = new Date().toISOString().split("T")[0];

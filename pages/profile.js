@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import { doc, setDoc, getDoc } from "firebase/firestore";
-import { auth, db } from "./firebase";
-import { useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase/firebase";
 import { toast, Bounce } from "react-toastify";
-import { useUser } from "./AuthContext";
+import { useUser } from "../context/AuthContext";
 
 const UserProfilePage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const navigate = useNavigate();
+  const navigate = useRouter();
 
   const { setUserName } = useUser();
 
@@ -47,7 +47,7 @@ const UserProfilePage = () => {
         progress: undefined,
         theme: "colored",
       });
-      navigate("/profile");
+      navigate.push("/profile");
     } catch (error) {
       toast.error("Something went wrong!", {
         position: "bottom-center",

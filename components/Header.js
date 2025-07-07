@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import { auth, db } from "../firebase";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from 'next/image';
+import { useRouter } from "next/router";
+import { auth, db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signOut } from "firebase/auth";
 import { FaUserCircle, FaBars, FaTimes } from "react-icons/fa";
-import { ReactComponent as Logo } from "../logo.svg";
-import { useUser } from "../AuthContext";
+import { useUser } from "../context/AuthContext";
 
 export default function Header() {
-  const navigate = useNavigate();
+  const navigate = useRouter();
   const [name, setName] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const { userName } = useUser();
@@ -30,7 +31,7 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      navigate("/");
+      navigate.push("/");
     } catch (error) {
       console.error("Failed to log out:", error);
       alert("Failed to log out. Please try again.");
@@ -46,41 +47,41 @@ export default function Header() {
       <div className="burger" onClick={toggleMenu}>
         {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
       </div>
-      <Link to="/" className="logo">
-        <Logo className="app-logo" />
+      <Link href="/" className="logo">
+        <Image className="app-logo" src="/logo.svg" width={300} height={300} alt="Expense Tracker" />
         Expense Tracker
       </Link>
       <nav className={`mobile-app-nav ${menuOpen ? "active" : ""}`}>
         <FaTimes className="close-icon" onClick={toggleMenu} size={24} />
-        <NavLink to="/" className="nav-link" onClick={() => setMenuOpen(false)}>
+        <Link href="/" className="nav-link" onClick={() => setMenuOpen(false)}>
           Daily
-        </NavLink>
-        <NavLink
-          to="/monthly"
+        </Link>
+        <Link
+          href="/monthly"
           className="nav-link"
           onClick={() => setMenuOpen(false)}
         >
           Monthly
-        </NavLink>
-        <NavLink
-          to="/profile"
+        </Link>
+        <Link
+          href="/profile"
           className="nav-link"
           onClick={() => setMenuOpen(false)}
         >
           My Profile
-        </NavLink>
+        </Link>
         <button className="nav-link logout-button" onClick={handleLogout}>
           Logout
         </button>
       </nav>
       <div className="app-header-right">
         <nav className="app-nav">
-          <NavLink to="/" className="nav-link">
+          <Link href="/" className="nav-link">
             Daily
-          </NavLink>
-          <NavLink to="/monthly" className="nav-link">
+          </Link>
+          <Link href="/monthly" className="nav-link">
             Monthly
-          </NavLink>
+          </Link>
         </nav>
         <div className="user-profile">
           <div className="user-data">
@@ -88,16 +89,16 @@ export default function Header() {
             <div className="user-name">{userName}</div>
           </div>
           <div className="user-profile-dropdown">
-            <NavLink
-              to="/profile"
+            <Link
+              href="/profile"
               onClick={handleLogout}
               className="profile-link logout-button"
             >
               Logout
-            </NavLink>
-            <NavLink to="/profile" className="profile-link">
+            </Link>
+            <Link href="/profile" className="profile-link">
               My Profile
-            </NavLink>
+            </Link>
           </div>
         </div>
       </div>

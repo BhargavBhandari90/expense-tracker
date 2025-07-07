@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { db, auth } from "./firebase";
+import { db, auth } from "../firebase/firebase";
 import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
-import "./styles/MonthlyExpensesPage.css";
 
 const MonthlyExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
