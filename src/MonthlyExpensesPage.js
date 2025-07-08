@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
-import getSymbolFromCurrency from "currency-symbol-map";
-import { useUser } from "./AuthContext";
 import { db, auth } from "./firebase";
 import { collection, getDocs, query, orderBy, where } from "firebase/firestore";
 import "./styles/MonthlyExpensesPage.css";
+import Amount from "./components/Amount";
 
 const MonthlyExpensesPage = () => {
   const [expenses, setExpenses] = useState([]);
   const [selectedMonth, setSelectedMonth] = useState(
     new Date().toISOString().slice(0, 7)
   );
-
-  const { userCurrency } = useUser();
-  const currency = getSymbolFromCurrency(userCurrency);
 
   const fetchMonthlyExpenses = React.useCallback(async () => {
     const expensesQuery = query(
@@ -73,7 +69,9 @@ const MonthlyExpensesPage = () => {
               <tr key={item.id}>
                 <td>{new Date(item.date).toDateString()}</td>
                 <td>{item.description}</td>
-                <td>₹{parseFloat(item.price || 0).toFixed(2)}</td>
+                <td>
+                  <Amount amount={parseFloat(item.price || 0)} />
+                </td>
               </tr>
             ))}
           </tbody>
@@ -82,7 +80,7 @@ const MonthlyExpensesPage = () => {
         <p>No expenses found for this month.</p>
       )}
       <h2 className="total-text total-highlight">
-        Total: {currency} {total.toFixed(2)}
+        Total: <Amount amount={total} />
       </h2>
     </>
   );
