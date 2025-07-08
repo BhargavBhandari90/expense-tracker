@@ -17,6 +17,7 @@ import {
   FaCircleChevronRight,
   FaPlus,
 } from "react-icons/fa6";
+import Amount from "../components/Amount";
 
 function DailyExpensesPage() {
   const todayDate = new Date().toISOString().split("T")[0];
@@ -150,7 +151,7 @@ function DailyExpensesPage() {
         <FaPlus />
       </button>
       <h2 className="total-text total-highlight">
-        Total: ₹{getTotal().toFixed(2)}
+        Total: <Amount amount={getTotal()} />
       </h2>
     </>
   );

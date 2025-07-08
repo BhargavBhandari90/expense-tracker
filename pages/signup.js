@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { auth } from "../firebase/firebase";
 import { signOut, createUserWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
+import Head from "next/head";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
@@ -35,6 +36,9 @@ function SignupPage() {
 
   return (
     <>
+      <Head>
+        <title>Daily Expense Tracker - SignUp</title>
+      </Head>
       <Image className="app-logo" src="/logo.svg" width={300} height={300} alt="Expense Tracker" />
       <h1>Sign Up</h1>
       <form>
