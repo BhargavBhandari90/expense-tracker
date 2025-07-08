@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ExpenseList from "./components/ExpenseList";
+import getSymbolFromCurrency from "currency-symbol-map";
+import { useUser } from "./AuthContext";
 import "./styles/App.css";
 import { db } from "./firebase";
 import {
@@ -26,6 +28,9 @@ function DailyExpensesPage() {
   const [expenses, setExpenses] = useState([]);
   const [selectedDate, setSelectedDate] = useState(todayDate);
   const [expensesCache, setExpensesCache] = useState({});
+
+  const { userCurrency } = useUser();
+  const currency = getSymbolFromCurrency(userCurrency);
 
   const handlePrevDay = () => {
     const prev = new Date(selectedDate);
@@ -152,7 +157,7 @@ function DailyExpensesPage() {
         <FaPlus />
       </button>
       <h2 className="total-text total-highlight">
-        Total: ₹{getTotal().toFixed(2)}
+        Total: {currency} {getTotal().toFixed(2)}
       </h2>
     </>
   );

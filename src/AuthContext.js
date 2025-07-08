@@ -18,6 +18,7 @@ export function useUser() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [userName, setUserName] = useState("");
+  const [userCurrency, setUserCurrency] = useState("INR");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export function AuthProvider({ children }) {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setUserName(docSnap.data().name || "");
+          setUserCurrency(docSnap.data().currency || "");
         }
       }
     };
@@ -44,7 +46,9 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext value={{ currentUser }}>
-      <UserContext value={{ userName, setUserName }}>
+      <UserContext
+        value={{ userName, setUserName, userCurrency, setUserCurrency }}
+      >
         {loading ? <Loader /> : children}
       </UserContext>
     </AuthContext>
