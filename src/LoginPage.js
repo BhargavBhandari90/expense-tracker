@@ -8,10 +8,12 @@ import { ReactComponent as Logo } from "./logo.svg";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success("You are Logged-in!", {
@@ -27,6 +29,8 @@ const LoginPage = () => {
       navigate("/");
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,8 +55,8 @@ const LoginPage = () => {
           autoComplete="current-password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="add-button" onClick={handleLogin}>
-          Login
+        <button className="add-button" onClick={handleLogin} disabled={loading}>
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
       <p>
