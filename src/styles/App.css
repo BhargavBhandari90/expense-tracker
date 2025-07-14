@@ -178,3 +178,21 @@ button.icon-button.delete {
   border-color: #4f46e5;
   outline: none;
 }
+
+.error {
+  min-height: 20px; /* Reserve space even if empty */
+  color: #d93025;
+  font-size: 0.9rem;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  transition: opacity 0.2s ease;
+  opacity: 1;
+}
+
+.error:empty {
+  opacity: 0;
+}
+
+.expense-input:invalid {
+  border-color: #d93025;
+}
