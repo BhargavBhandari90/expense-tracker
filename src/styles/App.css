@@ -179,14 +179,24 @@ button.icon-button.delete {
   outline: none;
 }
 
-.error {
-  min-height: 20px; /* Reserve space even if empty */
+.field-group {
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.field-group .error {
+  min-height: 20px;
   color: #d93025;
   font-size: 0.9rem;
-  margin-top: 4px;
-  margin-bottom: 4px;
   transition: opacity 0.2s ease;
   opacity: 1;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  margin: 0 10px;
 }
 
 .error:empty {

@@ -87,29 +87,35 @@ function SignupPage() {
       >
         {({ errors, touched }) => (
           <Form>
-            <Field
-              name="email"
-              className="expense-input"
-              placeholder="Email*"
-              autoComplete="off"
-            />
-            <ErrorMessage name="email" component="div" className="error" />
-            <Field
-              name="password"
-              type="password"
-              className="expense-input"
-              placeholder="Password*"
-              autoComplete="new-password"
-            />
-            <ErrorMessage name="password" component="div" className="error" />
-            <Field
-              name="confirmPassword"
-              type="password"
-              className="expense-input"
-              placeholder="Confirm Password*"
-              autoComplete="new-password"
-            />
-            <ErrorMessage name="confirmPassword" component="div" className="error" />
+            <div className="field-group">
+              <Field
+                name="email"
+                className="expense-input"
+                placeholder="Email*"
+                autoComplete="off"
+              />
+              <ErrorMessage name="email" component="div" className="error" />
+            </div>
+            <div className="field-group">
+              <Field
+                name="password"
+                type="password"
+                className="expense-input"
+                placeholder="Password*"
+                autoComplete="new-password"
+              />
+              <ErrorMessage name="password" component="div" className="error" />
+            </div>
+            <div className="field-group">
+              <Field
+                name="confirmPassword"
+                type="password"
+                className="expense-input"
+                placeholder="Confirm Password*"
+                autoComplete="new-password"
+              />
+              <ErrorMessage name="confirmPassword" component="div" className="error" />
+            </div>
             <button className="add-button" type="submit">
               {loading ? "Signing up..." : "Sign Up"}
             </button>
